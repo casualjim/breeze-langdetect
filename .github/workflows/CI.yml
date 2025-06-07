@@ -43,17 +43,12 @@ jobs:
           python-version: 3.x
       - name: Build wheels
         uses: PyO3/maturin-action@v1
-        env:
-          CFLAGS_aarch64_unknown_linux_gnu: "-std=c99"
-          CFLAGS_s390x_unknown_linux_gnu: "-std=c99"
-          CFLAGS_powerpc64le_unknown_linux_gnu: "-std=c99"
-          CFLAGS_i686_unknown_linux_gnu: "-std=c99"
-          CFLAGS_x86_64_unknown_linux_gnu: "-std=c99"
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
           sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
           manylinux: auto
+          docker-options: -e CFLAGS="-std=c99 -DPCRE2_DISABLE_JIT=1"
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
@@ -81,15 +76,12 @@ jobs:
           python-version: 3.x
       - name: Build wheels
         uses: PyO3/maturin-action@v1
-        env:
-          CFLAGS_aarch64_unknown_linux_gnu: "-std=c99"
-          CFLAGS_i686_unknown_linux_gnu: "-std=c99"
-          CFLAGS_x86_64_unknown_linux_gnu: "-std=c99"
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
           sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
           manylinux: musllinux_1_2
+          docker-options: -e CFLAGS="-std=c99 -DPCRE2_DISABLE_JIT=1"
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
