@@ -10,7 +10,8 @@
       "mcp__zep__add_memory",
       "Bash(cargo tree:*)",
       "Bash(gh run view:*)",
-      "Bash(cargo doc:*)"
+      "Bash(cargo doc:*)",
+      "Bash(gh run list:*)"
     ],
     "deny": []
   }

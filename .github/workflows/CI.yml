@@ -37,8 +37,13 @@ jobs:
         run: uv venv --python python${{ matrix.python-version }}
       - name: Build and install package
         run: |
-          uv pip install --python .venv maturin[patchelf]
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            uv pip install --python .venv maturin
+          else
+            uv pip install --python .venv maturin[patchelf]
+          fi
           uv run --python .venv maturin develop
+        shell: bash
       - name: Install test dependencies
         run: |
           uv pip install --python .venv pytest
