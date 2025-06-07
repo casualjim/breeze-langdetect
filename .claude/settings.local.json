@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__github__list_commits",
+      "Bash(gh api:*)"
     ],
     "deny": []
   }
