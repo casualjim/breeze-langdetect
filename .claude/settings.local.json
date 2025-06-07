@@ -9,7 +9,8 @@
       "Bash(grep:*)",
       "mcp__zep__add_memory",
       "Bash(cargo tree:*)",
-      "Bash(gh run view:*)"
+      "Bash(gh run view:*)",
+      "Bash(cargo doc:*)"
     ],
     "deny": []
   }

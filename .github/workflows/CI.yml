@@ -19,8 +19,36 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Create virtual environment with specific Python version
+        run: uv venv --python python${{ matrix.python-version }}
+      - name: Build and install package
+        run: |
+          uv pip install --python .venv maturin[patchelf]
+          uv run --python .venv maturin develop
+      - name: Install test dependencies
+        run: |
+          uv pip install --python .venv pytest
+      - name: Run tests
+        run: |
+          uv run --python .venv pytest test_breeze_langdetect.py -v
+
   linux:
     runs-on: ${{ matrix.platform.runner }}
+    needs: test
     strategy:
       matrix:
         platform:
@@ -57,6 +85,7 @@ jobs:
 
   musllinux:
     runs-on: ${{ matrix.platform.runner }}
+    needs: test
     strategy:
       matrix:
         platform:
@@ -88,6 +117,7 @@ jobs:
 
   windows:
     runs-on: ${{ matrix.platform.runner }}
+    needs: test
     strategy:
       matrix:
         platform:
@@ -115,6 +145,7 @@ jobs:
 
   macos:
     runs-on: ${{ matrix.platform.runner }}
+    needs: test
     strategy:
       matrix:
         platform:
