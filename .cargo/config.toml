@@ -4,13 +4,3 @@
 [env]
 # Use C99 standard for pcre2-sys compilation
 CFLAGS = "-std=c99"
-
-# For s390x, we need to disable JIT due to unsupported assembly instructions
-# We can use build overrides to set target-specific flags
-[target.s390x-unknown-linux-gnu]
-# This passes flags to the build scripts
-rustflags = ["-C", "link-arg=-DPCRE2_DISABLE_JIT=1"]
-
-# Alternative: Use a build override for pcre2-sys specifically
-# [target.s390x-unknown-linux-gnu.pcre2-sys]
-# rustc-env = { CFLAGS = "-std=c99 -DPCRE2_DISABLE_JIT=1" }
