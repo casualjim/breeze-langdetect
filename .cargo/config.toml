@@ -1,0 +1,10 @@
+# Configuration for building breeze-langdetect across different architectures
+
+# Set environment variables for all targets
+[env]
+# Use C99 standard for pcre2-sys compilation
+CFLAGS = "-std=c99"
+
+# Disable JIT compilation on s390x due to unsupported assembly instructions
+[target.s390x-unknown-linux-gnu.env]
+CFLAGS = "-std=c99 -DPCRE2_DISABLE_JIT=1"
