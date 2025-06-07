@@ -3,7 +3,12 @@
     "allow": [
       "Bash(ls:*)",
       "mcp__github__list_commits",
-      "Bash(gh api:*)"
+      "Bash(gh api:*)",
+      "mcp__zep__search_memory_nodes",
+      "mcp__zep__search_memory_facts",
+      "Bash(grep:*)",
+      "mcp__zep__add_memory",
+      "Bash(cargo tree:*)"
     ],
     "deny": []
   }
